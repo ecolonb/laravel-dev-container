@@ -58,7 +58,7 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 
 # Add nodejs and npm
 RUN apk add --update nodejs npm
-
+RUN npm i -g nodemon
 # Remove Cache
 RUN rm -rf /var/cache/apk/*
 
@@ -97,3 +97,8 @@ CMD ["/bin/source","/home/www/.bashrc"]
 # Expose port 9000 and start php-fpm server
 #EXPOSE 9000
 CMD ["php-fpm"]
+
+
+EXPOSE 8080
+EXPOSE 3001
+EXPOSE 3002

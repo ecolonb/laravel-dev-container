@@ -1,18 +1,18 @@
 version: "3.7"
 services:
-    nginx:
-        image: nginx:stable-alpine
-        container_name: nginx-laravel
-        ports:
-            - 7777:80
-        volumes:
-            #- ./src:/var/www/html
-            - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
-        depends_on:
-            - php
-            - mysql
-        networks:
-            - laravel-network
+    # nginx:
+    #     image: nginx:stable-alpine
+    #     container_name: nginx-laravel
+    #     ports:
+    #         - 7777:80
+    #     volumes:
+    #         #- ./src:/var/www/html
+    #         - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+    #     depends_on:
+    #         - php
+    #         - mysql
+    #     networks:
+    #         - laravel-network
     
     mysql:
         image: mysql:5.7
@@ -28,7 +28,9 @@ services:
         volumes:
             - ./mysql:/var/lib/mysql
         networks:
-            - laravel-network
+            dev-network:
+                aliases:
+                    - mysqlhost
 
     php:
         build:
@@ -39,8 +41,11 @@ services:
             - ./src:/var/www/html
         ports:
             - 9001:80
+            - 8080:8080
         networks:
-            - laravel-network
+            dev-network:
+                aliases:
+                    - phphost
 
 networks:
-    laravel-network:
+    dev-network:
